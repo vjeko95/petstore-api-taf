@@ -1,0 +1,14 @@
+{
+  "pet": {
+    "id": 12345,
+    "name": "Mrvica",
+    "photoUrls": ["https://example.com/photo.jpg"],
+    "status": "available"
+  },
+  "updated_pet": {
+    "id": 12345,
+    "name": "Mrva",
+    "photoUrls": ["https://example.com/photo_updated.jpg"],
+    "status": "sold"
+  }
+}
