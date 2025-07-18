@@ -1,95 +1,113 @@
+# Pet Store API Test Automation Framework
 
-# 🐾 PetStore API Test Automation Framework
+This project implements a **Test Automation Framework (TAF)** for validating key endpoints of the [Swagger Petstore API](https://petstore.swagger.io/).
 
-This project is a Test Automation Framework (TAF) designed to validate key API endpoints of the [Swagger Petstore](https://petstore.swagger.io/) using Python and Pytest.
+## Table of Contents
 
----
+* [Overview](#overview)
+* [Installation](#installation)
+* [Project Structure](#project-structure)
+* [Running Tests](#running-tests)
+* [API Under Test](#api-under-test)
+* [Authentication](#authentication)
+* [Dependencies](#dependencies)
+* [Test Scenarios](#test-scenarios)
 
-## 📌 Objectives
+## Overview
 
-- Automate API tests for:
-  - `POST /pet` — Add a new pet
-  - `GET /pet/{petId}` — Retrieve a pet by ID
-  - `PUT /pet` — Update an existing pet
-- Provide a scalable and maintainable structure for API testing
-- Optional: Simulate authentication using an API key
+This framework automates the testing of the following API endpoints:
 
----
+* `POST /pet` – Add a new pet
+* `GET /pet/{petId}` – Retrieve pet by ID
+* `PUT /pet` – Update an existing pet
 
-## 📁 Project Structure
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/vjeko95/petstore-api-taf.git
+cd petstore-api-taf
+
+# (Optional) Create virtual environment
+python -m venv test_env
+source test_env/bin/activate  # On Windows: test_env\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+## Project Structure
 
 ```
 petstore-api-taf/
 ├── data/
-│   └── test_data.json           # Test data for pet creation and update
+│   └── test_data.json           # Static JSON data for testing
 ├── src/
 │   └── api/
-│       └── pet_api.py           # API client with add/get/update methods
+│       └── pet_api.py           # Abstraction layer for API calls
 ├── tests/
-│   ├── test_add_pet.py          # Test for POST /pet
-│   ├── test_get_pet.py          # Test for GET /pet/{id}
-│   └── test_update_pet.py       # Test for PUT /pet
-├── .env                         # Optional: Store API key
-├── requirements.txt             # Python dependencies
-├── pytest.ini                   # (Optional) Pytest config
-└── README.md                    # Project documentation
+│   ├── test_add_pet.py         # Test for POST /pet
+│   ├── test_get_pet.py         # Test for GET /pet/{id}
+│   └── test_update_pet.py      # Test for PUT /pet
+├── .env                        # (Optional) Environment variables like API keys
+├── requirements.txt            # Python dependencies
+└── pytest.ini                  # Pytest configuration
 ```
 
----
+## Running Tests
 
-## 🚀 Getting Started
-
-### 1. Clone the repository
+Run all tests:
 
 ```bash
-git clone https://github.com/your-username/petstore-api-taf.git
-cd petstore-api-taf
+pytest
 ```
 
-### 2. Create a virtual environment
+Run a specific test file:
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+pytest tests/test_add_pet.py
 ```
 
-### 3. Install dependencies
+## API Under Test
+
+* [Swagger Petstore Documentation](https://petstore.swagger.io/)
+
+## Authentication
+
+If enabled, all requests can include an `api_key` header:
+
+```python
+headers = {"api_key": os.getenv("API_KEY")}
+```
+
+You can define the API key in a `.env` file:
+
+```
+API_KEY=test_api_key
+```
+
+## Dependencies
+
+Key libraries used:
+
+* `pytest` – Test runner
+* `requests` – HTTP client
+* `python-dotenv` – Loads `.env` file values
+
+Install them with:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Optional: Add an API key
+## Test Scenarios
 
-Create a `.env` file:
+Each test case:
 
-```env
-API_KEY=test_api_key
-```
+* Load pet data from `test_data.json`
+* Sends API request (POST, GET, PUT)
+* Asserts expected response code and data
 
-Then make sure `python-dotenv` is used in `pet_api.py` (already supported via `os.getenv()`).
+## Author
 
----
-
-## 🧪 Running Tests
-
-```bash
-pytest tests/ -v
-```
-
----
-
-## 🧩 Notes
-
-- Test data is managed in `data/test_data.json`.
-- Tests are designed to be simple, clear, and directly reflect real API usage.
-- The API client in `src/api/pet_api.py` encapsulates all HTTP logic for reusability and clarity.
-
----
-
-## 🔐 Optional API Key Support
-
-The API client includes support for an optional API key via environment variable.  
-If present, it will be added to the request headers.
-
-
+Developed by Vjekoslav Večković
